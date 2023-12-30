@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import Start from './components/Start';
+import Middle from './components/Middle';
+import End from './components/End';
+import LoginForm from './components/LoginForm';
+import { useState } from 'react';
+import SignForm from './components/SignForm';
+import './App.css'
 
 function App() {
+  const [loginState,setloginState]=useState(false);
+  const [signup,setsignup]=useState(false);
+  const loginHandler=()=>{
+    console.log("logged");
+    setloginState(true);
+   setsignup(false);
+  }
+  const signupHandler=()=>{
+    console.log("signup");
+    setsignup(true);
+    setloginState(false);
+  }
+  const handleClose=()=>{
+    setloginState(false);
+    setsignup(false);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+     <Start loginHandler={loginHandler} signupHandler={signupHandler}/>
+     {loginState && <LoginForm onClose={handleClose} gotosignup={signupHandler}/>}
+     {signup && <SignForm onClose={handleClose} gotologin={loginHandler}/>}
+     <Middle/>
+     <End/>
     </div>
   );
 }
